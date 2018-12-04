@@ -6,7 +6,7 @@ public class Breakpoints {
 
     public static void main(final String... args) {
         //create objects
-        Object o = MakeThings.makeAThing();
+        Object o = "String";
         System.out.println("Going inside print");
         printThis(o);
     }

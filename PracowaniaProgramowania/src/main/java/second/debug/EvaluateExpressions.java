@@ -1,7 +1,9 @@
 package second.debug;
 
+
 import second.debug.hidden.ObjectMaker;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ public class EvaluateExpressions {
 
     public static void main(final String... args) {
         // Let's make a list of 100000 objects
-        final List<Integer> myList = ObjectMaker.getList(100000);
+        final List<Integer> myList = ObjectMaker.getList(1000000);
 
         // Now let's process some objects from our list
 
