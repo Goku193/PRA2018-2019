@@ -1,15 +1,18 @@
 package quartz.scheduler;
 
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.Trigger;
+import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import quartz.job.JobWithMap;
+import quartz.job.DumbJob;
+
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
+
+
 
 public class JobMapScheduler {
 
@@ -25,6 +28,12 @@ public class JobMapScheduler {
                     .usingJobData("jobSays", "Hello World!")
                     .build();
 
+            JobDetail dumbJob = newJob(DumbJob.class)
+                    .withIdentity("myJob", "group1") // name "myJob", group "group1"
+                    .usingJobData("jobSays", "Hello World!")
+                    .usingJobData("myFloatValue", 3.141f)
+                    .build();
+
             // Trigger the job to run now, and then repeat every 1 seconds
             Trigger trigger = newTrigger()
                     .withIdentity("trigger1", "group1")
@@ -34,9 +43,9 @@ public class JobMapScheduler {
                             .repeatForever())
                     .build();
 
-
             // Tell quartz to schedule the job using our trigger
-            scheduler.scheduleJob(job, trigger);
+            scheduler.scheduleJob(dumbJob, trigger);
+
 
             // and start it off
             scheduler.start();

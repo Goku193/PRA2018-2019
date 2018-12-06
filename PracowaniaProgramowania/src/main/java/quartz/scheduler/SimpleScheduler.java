@@ -1,9 +1,6 @@
 package quartz.scheduler;
 
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.Trigger;
+import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import quartz.job.SimpleJob;
 
@@ -28,14 +25,20 @@ public class SimpleScheduler {
             Trigger trigger = newTrigger()
                     .withIdentity("trigger1", "group1")
                     .startNow()
+
                     .withSchedule(simpleSchedule()
                             .withIntervalInSeconds(1)
                             .repeatForever())
                     .build();
+            CronTrigger cronTrigger = newTrigger()
+                    .withIdentity("trigger2","group2")
+                    .startNow()
+                    .withSchedule(CronScheduleBuilder.cronSchedule("30 * * * * ?"))
+                    .build();
 
 
             // Tell quartz to schedule the job using our trigger
-            scheduler.scheduleJob(job, trigger);
+            scheduler.scheduleJob(job, cronTrigger);
 
             // and start it off
             scheduler.start();
