@@ -4,6 +4,7 @@ import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import quartz.job.JobWithMap;
 import quartz.job.DumbJob;
+import quartz.job.ProperJob;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -32,6 +33,9 @@ public class JobMapScheduler {
                     .withIdentity("myJob", "group1") // name "myJob", group "group1"
                     .usingJobData("jobSays", "Hello World!")
                     .usingJobData("myFloatValue", 3.141f)
+                    .build();
+
+            JobDetail properJob = newJob(ProperJob.class)
                     .build();
 
             // Trigger the job to run now, and then repeat every 1 seconds

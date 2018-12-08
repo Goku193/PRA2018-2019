@@ -2,7 +2,9 @@ package quartz.scheduler;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import quartz.job.ProperJob;
 import quartz.job.SimpleJob;
+import quartz.job.TimeJob;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
@@ -20,6 +22,10 @@ public class SimpleScheduler {
             JobDetail job = newJob(SimpleJob.class)
                     .withIdentity("job1", "group1")
                     .build();
+            JobDetail properJob = newJob(ProperJob.class)
+                    .build();
+            JobDetail timeJob = newJob(TimeJob.class)
+                    .build();
 
             // Trigger the job to run now, and then repeat every 40 seconds
             Trigger trigger = newTrigger()
@@ -33,18 +39,25 @@ public class SimpleScheduler {
             CronTrigger cronTrigger = newTrigger()
                     .withIdentity("trigger2","group2")
                     .startNow()
-                    .withSchedule(CronScheduleBuilder.cronSchedule("30 * * * * ?"))
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0/1 * * * * ?"))
+                    .build();
+            CronTrigger cronTrigger1 = newTrigger()
+                    .withIdentity("trigger3","group3")
+                    .startNow()
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0/1 * * * * ?"))
                     .build();
 
 
+
             // Tell quartz to schedule the job using our trigger
-            scheduler.scheduleJob(job, cronTrigger);
+            scheduler.scheduleJob(properJob, cronTrigger);
+            //scheduler.scheduleJob(timeJob,cronTrigger1);
 
             // and start it off
             scheduler.start();
 
             // Sleep for 6 seconds and then shutdown the scheduler
-            Thread.sleep(6000);
+            Thread.sleep(2000);
 
             scheduler.shutdown();
 

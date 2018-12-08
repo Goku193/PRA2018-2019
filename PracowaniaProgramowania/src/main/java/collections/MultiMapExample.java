@@ -4,13 +4,15 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.multimap.bag.HashBagMultimap;
 import org.eclipse.collections.impl.multimap.list.FastListMultimap;
 
+import java.util.Scanner;
+
 public class MultiMapExample {
 
     public static void main(String[] args) throws InterruptedException {
 
         FastListMultimap<String, String> citiesToPeople = FastListMultimap.newMultimap();
 
-        citiesToPeople.put("Poznan", "Nowak");
+
         citiesToPeople.put("Poznan", "Kowalski");
         citiesToPeople.put("Poznan", "Abraham");
 
