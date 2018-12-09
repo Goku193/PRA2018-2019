@@ -24,7 +24,7 @@ public class ProperJob implements Job {
     public void execute(JobExecutionContext context)
             throws JobExecutionException
     {
-        System.out.println("Jestem");
+        System.out.println("Zapisuje do pliku");
 
         try {
             new ProperJob().n();

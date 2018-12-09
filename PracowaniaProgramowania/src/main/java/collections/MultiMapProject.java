@@ -46,8 +46,9 @@ public class MultiMapProject {
         String nazwisko;
         Boolean end = true;
         long PESEL;
+        int licznik = 0;
         //Scanner S = new Scanner(System.in);
-        while (end != false) {
+        while (licznik != 3) {
             Scanner S = new Scanner(System.in);
             miasto = S.next();
             imie = S.next();
@@ -61,7 +62,8 @@ public class MultiMapProject {
             if (checkSum(PES)) {
                 System.out.println("Numer PESEL zgodny.");
                 PeopleList.put(miasto, imie + " " + nazwisko + " " + PESEL);
-                end = false;
+                licznik++;
+                //end = false;
             }
             else
             {

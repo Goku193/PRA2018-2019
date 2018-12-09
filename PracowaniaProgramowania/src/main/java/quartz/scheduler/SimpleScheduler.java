@@ -39,25 +39,25 @@ public class SimpleScheduler {
             CronTrigger cronTrigger = newTrigger()
                     .withIdentity("trigger2","group2")
                     .startNow()
-                    .withSchedule(CronScheduleBuilder.cronSchedule("0/1 * * * * ?"))
+                    .withSchedule(CronScheduleBuilder.cronSchedule("30 * * * * ?"))
                     .build();
             CronTrigger cronTrigger1 = newTrigger()
                     .withIdentity("trigger3","group3")
                     .startNow()
-                    .withSchedule(CronScheduleBuilder.cronSchedule("0/1 * * * * ?"))
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0 * * * * ?"))
                     .build();
 
 
 
             // Tell quartz to schedule the job using our trigger
             scheduler.scheduleJob(properJob, cronTrigger);
-            //scheduler.scheduleJob(timeJob,cronTrigger1);
+            scheduler.scheduleJob(timeJob,cronTrigger1);
 
             // and start it off
             scheduler.start();
 
             // Sleep for 6 seconds and then shutdown the scheduler
-            Thread.sleep(2000);
+            Thread.sleep(60000);
 
             scheduler.shutdown();
 
