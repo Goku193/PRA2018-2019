@@ -1,10 +1,12 @@
 package lambdas;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Address;
 import model.Employee;
 import org.joda.time.DateTime;
 import pl.edu.amu.pracprog.ModelObjectsCreator;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,12 +17,33 @@ public class ListOperations {
     public static void main(String[] args) throws IOException {
 
         ModelObjectsCreator objectsCreator = new ModelObjectsCreator();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Employee prac = new Employee();
+        Employee prac2 = new Employee();
 
         List<Employee> employeeList = new ArrayList<>();
+        List<Employee> managersList = new ArrayList<>();
+        List <Employee> subworkersList = new ArrayList<>();
 
         employeeList.add(objectsCreator.getEmp());
         employeeList.add(objectsCreator.getEmp2());
         employeeList.addAll(addEmp());
+
+        prac.setFirstName("Michal");
+        prac.setLastName("Michalski");
+        subworkersList.add(prac);
+
+
+        prac2.setFirstName("Tomek");
+        prac2.setLastName("Jakis");
+        managersList.add(prac2);
+
+        prac.setManagers(managersList);
+        prac2.setSubworkers(subworkersList);
+
+
+
+
 
         //For loop through list
         IntStream.range(0,employeeList.size())
@@ -82,8 +105,9 @@ public class ListOperations {
                 .collect(Collectors.toMap(employee -> employee.getFirstName(), employee -> employee, (a, b) -> a));
 
         System.out.println(map.entrySet());
-        
+        //objectMapper.writeValue(new File("J:/IdeaProjects/PRA2018-2019/PracowaniaProgramowania/target/empl.json"), prac);
     }
+
 
     private static List<Employee> addEmp() {
 
