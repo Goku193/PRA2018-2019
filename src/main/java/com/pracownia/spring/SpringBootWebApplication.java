@@ -44,6 +44,7 @@ public class SpringBootWebApplication extends SpringBootServletInitializer {
                 .build();
     }
 
+
     public static void main(String[] args) {
         SpringApplication.run(SpringBootWebApplication.class, args);
     }

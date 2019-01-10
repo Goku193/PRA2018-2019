@@ -2,6 +2,8 @@ package com.pracownia.spring.controllers;
 
 import com.pracownia.spring.entities.Product;
 import com.pracownia.spring.entities.Seller;
+import com.pracownia.spring.entities.Movie;
+import com.pracownia.spring.services.MovieService;
 import com.pracownia.spring.services.ProductService;
 import com.pracownia.spring.services.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class IndexController {
     @Autowired
     private SellerService sellerService;
 
+    @Autowired
+    private MovieService movieService;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     String index() {
         return "index";
@@ -42,11 +47,11 @@ public class IndexController {
     @RequestMapping(value = "generateModel", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
     public String generateModel() {
 
-        LocalDateTime localtDateAndTime = LocalDateTime.now();
+        LocalDateTime localDateAndTime = LocalDateTime.now();
         ZoneId zoneId = ZoneId.systemDefault();
-        ZonedDateTime dateAndTime  = ZonedDateTime.of(localtDateAndTime, zoneId);
+        ZonedDateTime dateAndTime  = ZonedDateTime.of(localDateAndTime, zoneId);
 
-        Product p1 = new Product(UUID.randomUUID().toString(),"Jajko", new BigDecimal(2.50), dateAndTime.plusDays(7));
+        Product p1 = new Product(UUID.randomUUID().toString(),"Jajko", new BigDecimal(23.50), dateAndTime.plusDays(7));
         Product p2 = new Product(UUID.randomUUID().toString(),"Masło", new BigDecimal(3.50), dateAndTime.plusDays(7));
         Product p3 = new Product(UUID.randomUUID().toString(),"Mąka", new BigDecimal(1.50), dateAndTime.plusDays(7));
 
@@ -69,6 +74,12 @@ public class IndexController {
         productService.saveProduct(p1);
         productService.saveProduct(p2);
         productService.saveProduct(p3);
+
+        Movie m1 = new Movie("Captain Marvel","2019");
+        Movie m2 = new Movie("Avengers: Infinity War", "2018");
+
+        movieService.saveMovie(m1);
+        movieService.saveMovie(m2);
 
         return "Model Generated";
     }
