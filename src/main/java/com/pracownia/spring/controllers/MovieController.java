@@ -86,7 +86,7 @@ public class MovieController {
     @RequestMapping(value = "/movie/{id}", method = RequestMethod.DELETE)
     public RedirectView delete(HttpServletResponse response, @PathVariable Integer id) {
         movieService.deleteMovie(id);
-        return new RedirectView("/api/products", true);
+        return new RedirectView("/api/movies", true);
     }
 
 }

@@ -2,6 +2,11 @@ package com.pracownia.spring.entities;
 
 
 import javax.persistence.*;
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+import java.io.IOException;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +22,10 @@ public class Movie {
     @Column
     private String title;
 
+
+    @Column
+    private String movieId;
+
     @Column
     private String year;
 
@@ -28,6 +37,7 @@ public class Movie {
 
     public Movie(String title, String year)
     {
+        movieId = getMovieId(title);
         this.title = title;
         this.year = year;
     }
@@ -55,4 +65,22 @@ public class Movie {
     public void setId(int id) {
         Id = id;
     }
+
+    public String getMovieId() {return movieId;}
+
+    public String getMovieId(String title) {
+        try {
+            Document doc = Jsoup.connect("https://www.imdb.com/find?&q=" + title.replace(" ", "+")).get();
+            Element table = doc.select("table[class=findList]").first();
+            String link = table.select("a").toString();
+            movieId = link.substring(16,25);
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return movieId; }
+
+    public void setMovieId(String movieId) { this.movieId = movieId; }
+
 }
