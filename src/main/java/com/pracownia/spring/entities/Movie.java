@@ -7,9 +7,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
-import java.time.Year;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Movie {
@@ -29,6 +28,8 @@ public class Movie {
     @Column
     private String year;
 
+    @OneToMany(mappedBy = "moviesOb")
+    private Set<Director> directors = new HashSet<>();
 
     public Movie()
     {
@@ -68,7 +69,7 @@ public class Movie {
 
     public String getMovieId() {return movieId;}
 
-    public String getMovieId(String title) {
+    private String getMovieId(String title) {
         try {
             Document doc = Jsoup.connect("https://www.imdb.com/find?&q=" + title.replace(" ", "+")).get();
             Element table = doc.select("table[class=findList]").first();
@@ -83,4 +84,11 @@ public class Movie {
 
     public void setMovieId(String movieId) { this.movieId = movieId; }
 
+    public Set<Director> getDirectors() {
+        return directors;
+    }
+
+    public void setDirectors(Set<Director> directors) {
+        this.directors = directors;
+    }
 }
